@@ -1,5 +1,6 @@
 
 const express = require('express');
+const commments = require('./comments');
 const fakePosts = require('../data/posts');
 
 const router = express.Router();
@@ -8,7 +9,7 @@ router.get('/', (req, res) => {
   res.json(fakePosts);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:postId', (req, res) => {
   const postId = Number(req.params.id);
   const foundPost = fakePosts.find((post) => post.id === postId);
   if (!foundPost) {
@@ -18,5 +19,7 @@ router.get('/:id', (req, res) => {
   }
   return res.json(foundPost);
 });
+
+router.use('/:postId/comments', commments)
 
 module.exports = router;
